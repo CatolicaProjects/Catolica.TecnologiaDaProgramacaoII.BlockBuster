@@ -1,0 +1,22 @@
+﻿@model BlockBuster.Models.Copia
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Copia</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.TipoCopiaId)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.TipoCopiaId)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
