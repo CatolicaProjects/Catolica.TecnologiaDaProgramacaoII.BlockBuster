@@ -99,26 +99,30 @@ namespace BlockBuster.Controllers
             if (arrayAtores == null)
             {
                 tituloToUpdate.Atores = new List<Ator>();
-            }
-
-            var selectedAtoresHS = new HashSet<string>(arrayAtores);
-
-            var tituloAtores = new HashSet<Int64>(tituloToUpdate.Atores.Select(s => s.Id));
-
-            foreach (var ator in db.Atores)
-            {
-                if (selectedAtoresHS.Contains(ator.Id.ToString()))
+                foreach (var ator in db.Atores)
                 {
-                    if (!tituloAtores.Contains(ator.Id))
-                    {
-                        tituloToUpdate.Atores.Add(ator);
-                    }
+                    tituloToUpdate.Atores.Remove(ator);
                 }
-                else
+            }
+            else
+            {
+                var selectedAtoresHS = new HashSet<string>(arrayAtores);
+                var tituloAtores = new HashSet<Int64>(tituloToUpdate.Atores.Select(s => s.Id));
+                foreach (var ator in db.Atores)
                 {
-                    if (tituloAtores.Contains(ator.Id))
+                    if (selectedAtoresHS.Contains(ator.Id.ToString()))
                     {
-                        tituloToUpdate.Atores.Remove(ator);
+                        if (!tituloAtores.Contains(ator.Id))
+                        {
+                            tituloToUpdate.Atores.Add(ator);
+                        }
+                    }
+                    else
+                    {
+                        if (tituloAtores.Contains(ator.Id))
+                        {
+                            tituloToUpdate.Atores.Remove(ator);
+                        }
                     }
                 }
             }
@@ -129,6 +133,7 @@ namespace BlockBuster.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
             return View(tituloToUpdate);
         }

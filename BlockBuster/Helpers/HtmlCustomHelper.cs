@@ -12,14 +12,22 @@ namespace BlockBuster.Helpers
     {
         public static string BuildString(List<Ator> atores)
         {
-            StringBuilder content = new StringBuilder();
-
-            foreach (var ator in atores)
+            if (atores.Count > 0)
             {
-                content.AppendFormat("{0}, ", ator.Nome);
+                StringBuilder content = new StringBuilder();
+
+                foreach (var ator in atores)
+                {
+                    content.AppendFormat("{0}, ", ator.Nome);
+                }
+
+                int virgulaEEspaco = content.Length - 2;
+                return content.Remove(virgulaEEspaco, 2).ToString();
             }
-            int virgulaEEspaco = content.Length - 2;
-            return content.Remove(virgulaEEspaco, 2).ToString();
+            else
+            {
+                return string.Empty;
+            }
         }
     }
 }
