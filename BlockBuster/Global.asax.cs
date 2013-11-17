@@ -26,7 +26,7 @@ namespace BlockBuster
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<Repository>());
+            //Database.SetInitializer(new DropCreateDatabaseAlways<Repository>());
         }
     }
 }

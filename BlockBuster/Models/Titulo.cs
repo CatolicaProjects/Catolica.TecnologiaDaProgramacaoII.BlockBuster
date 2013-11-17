@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace BlockBuster.Models
 {
@@ -35,6 +36,8 @@ namespace BlockBuster.Models
 
         public virtual ICollection<Genero> Generos { get; set; }
 
+        public IEnumerable<string> ArrayAtores = new List<string>();
+        
         public virtual ICollection<Ator> Atores { get; set; }
 
         public virtual ICollection<Copia> Copias { get; set; }

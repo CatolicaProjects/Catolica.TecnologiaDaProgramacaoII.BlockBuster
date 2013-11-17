@@ -53,6 +53,13 @@
             @Html.EditorFor(model => model.TipoTituloId)
             @Html.ValidationMessageFor(model => model.TipoTituloId)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Atores)
+        </div>
+        <div class="editor-field">
+            @Html.ListBox("ArrayAtores", (MultiSelectList)ViewBag.MultiSelectAtores)
+            @Html.ValidationMessageFor(model => model.ArrayAtores)
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>

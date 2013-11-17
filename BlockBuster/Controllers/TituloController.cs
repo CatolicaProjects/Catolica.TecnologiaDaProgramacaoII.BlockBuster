@@ -19,7 +19,8 @@ namespace BlockBuster.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Titulos.ToList());
+            var titulos = db.Titulos.Include(i => i.Atores).ToList();
+            return View(titulos);
         }
 
         //
@@ -40,6 +41,7 @@ namespace BlockBuster.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
             return View();
         }
 
@@ -47,15 +49,25 @@ namespace BlockBuster.Controllers
         // POST: /Titulo/Create
 
         [HttpPost]
-        public ActionResult Create(Titulo titulo)
+        public ActionResult Create(Titulo titulo, FormCollection formCollection, string[] arrayAtores)
         {
+            if (arrayAtores != null)
+            {
+                titulo.Atores = new List<Ator>();
+                foreach (var ator in arrayAtores)
+                {
+                    var atorToAdd = db.Atores.Find(int.Parse(ator));
+                    titulo.Atores.Add(atorToAdd);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 db.Titulos.Add(titulo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
             return View(titulo);
         }
 
@@ -69,6 +81,7 @@ namespace BlockBuster.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
             return View(titulo);
         }
 
@@ -76,16 +89,48 @@ namespace BlockBuster.Controllers
         // POST: /Titulo/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Titulo titulo)
+        public ActionResult Edit(int? id, FormCollection formCollection, string[] arrayAtores)
         {
+            var tituloToUpdate = db.Titulos
+                .Include(i => i.Atores)
+                .Where(i => i.Id == id)
+                .Single();
+
+            if (arrayAtores == null)
+            {
+                tituloToUpdate.Atores = new List<Ator>();
+            }
+
+            var selectedAtoresHS = new HashSet<string>(arrayAtores);
+
+            var tituloAtores = new HashSet<Int64>(tituloToUpdate.Atores.Select(s => s.Id));
+
+            foreach (var ator in db.Atores)
+            {
+                if (selectedAtoresHS.Contains(ator.Id.ToString()))
+                {
+                    if (!tituloAtores.Contains(ator.Id))
+                    {
+                        tituloToUpdate.Atores.Add(ator);
+                    }
+                }
+                else
+                {
+                    if (tituloAtores.Contains(ator.Id))
+                    {
+                        tituloToUpdate.Atores.Remove(ator);
+                    }
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                db.Entry(titulo).State = EntityState.Modified;
+                db.Entry(tituloToUpdate).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            
-            return View(titulo);
+            ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
+            return View(tituloToUpdate);
         }
 
         //
