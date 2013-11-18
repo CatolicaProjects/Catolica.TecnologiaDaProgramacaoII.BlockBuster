@@ -52,12 +52,10 @@
                 @Html.DisplayFor(modelItem => item.TipoTituloId)
             </td>
             <td>
-                @{ string content = BlockBuster.Helpers.HtmlCustomHelper.BuildString(item.Atores.ToList()); }
-                @Html.DisplayFor(modelItem => content)
+                @Html.DisplayFor(modelItem => item.DescricaoAtores)
             </td>
             <td>
-                @{ content = BlockBuster.Helpers.HtmlCustomHelper.BuildString(item.Generos.ToList()); }
-                @Html.DisplayFor(modelItem => content)
+                @Html.DisplayFor(modelItem => item.DescricaoGeneros)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

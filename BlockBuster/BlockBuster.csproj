@@ -174,7 +174,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\HtmlCustomHelper.cs" />
     <Compile Include="Migrations\201311091930005_Initial.cs" />
     <Compile Include="Migrations\201311091930005_Initial.Designer.cs">
       <DependentUpon>201311091930005_Initial.cs</DependentUpon>
@@ -387,6 +386,7 @@
     <Content Include="Views\Shared\EditorTemplates\TituloDropDownList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TipoTituloDropDownList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TipoCopiaDropDownList.cshtml" />
+    <Content Include="Views\Cliente\AddCredits.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

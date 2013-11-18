@@ -16,8 +16,8 @@ namespace BlockBuster.Models
 
         [Required]
         [UIHint("ClienteDropDownList")]
-        public int ClienteId { get; set; }
         [Display(Name = "Cliente")]
+        public int ClienteId { get; set; }
         public virtual Cliente Cliente { get; set; }
 
         [Required]

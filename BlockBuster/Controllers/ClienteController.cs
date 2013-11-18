@@ -112,6 +112,30 @@ namespace BlockBuster.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult AddCredits(long id = 0)
+        {
+            Cliente cliente = db.Clientes.Find(id);
+            if (cliente == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cliente);
+        }
+
+        [HttpPost]
+        public ActionResult AddCredits(Int64 id, decimal valorAcrescimo)
+        {
+            Cliente cliente = db.Clientes.Find(id);
+            cliente.Saldo += valorAcrescimo;
+            if (ModelState.IsValid)
+            {
+                db.Entry(cliente).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(cliente);
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
