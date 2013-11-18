@@ -19,7 +19,7 @@ namespace BlockBuster.Controllers
 
         public ActionResult Index()
         {
-            var titulos = db.Titulos.Include(i => i.Atores).ToList();
+            var titulos = db.Titulos.Include(i => i.Atores).Include(i => i.Generos).ToList();
             return View(titulos);
         }
 
@@ -42,6 +42,7 @@ namespace BlockBuster.Controllers
         public ActionResult Create()
         {
             ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
+            ViewBag.MultiSelectGeneros = new MultiSelectList(db.Generos.ToList(), "Id", "Descricao");
             return View();
         }
 
@@ -49,8 +50,9 @@ namespace BlockBuster.Controllers
         // POST: /Titulo/Create
 
         [HttpPost]
-        public ActionResult Create(Titulo titulo, FormCollection formCollection, string[] arrayAtores)
+        public ActionResult Create(Titulo titulo, FormCollection formCollection, string[] arrayAtores, string[] arrayGeneros)
         {
+            titulo.TipoTitulo = db.TipoTitulos.Find(titulo.TipoTituloId);
             if (arrayAtores != null)
             {
                 titulo.Atores = new List<Ator>();
@@ -61,6 +63,16 @@ namespace BlockBuster.Controllers
                 }
             }
 
+            if (arrayGeneros != null)
+            {
+                titulo.Generos = new List<Genero>();
+                foreach (var genero in arrayGeneros)
+                {
+                    var generoToAdd = db.Generos.Find(int.Parse(genero));
+                    titulo.Generos.Add(generoToAdd);
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 db.Titulos.Add(titulo);
@@ -68,6 +80,7 @@ namespace BlockBuster.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
+            ViewBag.MultiSelectGeneros = new MultiSelectList(db.Generos.ToList(), "Id", "Descricao");
             return View(titulo);
         }
 
@@ -81,7 +94,11 @@ namespace BlockBuster.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
+            var selectedAtores = titulo.Atores.Select(s => s.Id.ToString());
+            var selectedGeneros = titulo.Generos.Select(s => s.Id.ToString());
+
+            ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome", selectedAtores);
+            ViewBag.MultiSelectGeneros = new MultiSelectList(db.Generos.ToList(), "Id", "Descricao", selectedGeneros);
             return View(titulo);
         }
 
@@ -89,10 +106,11 @@ namespace BlockBuster.Controllers
         // POST: /Titulo/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int? id, FormCollection formCollection, string[] arrayAtores)
+        public ActionResult Edit(int? id, FormCollection formCollection, string[] arrayAtores, string[] arrayGeneros)
         {
             var tituloToUpdate = db.Titulos
                 .Include(i => i.Atores)
+                .Include(i => i.Generos)
                 .Where(i => i.Id == id)
                 .Single();
 
@@ -127,6 +145,37 @@ namespace BlockBuster.Controllers
                 }
             }
 
+            if (arrayGeneros == null)
+            {
+                tituloToUpdate.Generos = new List<Genero>();
+                foreach (var genero in db.Generos)
+                {
+                    tituloToUpdate.Generos.Remove(genero);
+                }
+            }
+            else
+            {
+                var selectedGenerosHS = new HashSet<string>(arrayGeneros);
+                var tituloGeneros = new HashSet<Int64>(tituloToUpdate.Generos.Select(s => s.Id));
+                foreach (var genero in db.Generos)
+                {
+                    if (selectedGenerosHS.Contains(genero.Id.ToString()))
+                    {
+                        if (!tituloGeneros.Contains(genero.Id))
+                        {
+                            tituloToUpdate.Generos.Add(genero);
+                        }
+                    }
+                    else
+                    {
+                        if (tituloGeneros.Contains(genero.Id))
+                        {
+                            tituloToUpdate.Generos.Remove(genero);
+                        }
+                    }
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 db.Entry(tituloToUpdate).State = EntityState.Modified;
@@ -135,6 +184,7 @@ namespace BlockBuster.Controllers
             }
 
             ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
+            ViewBag.MultiSelectGeneros = new MultiSelectList(db.Generos.ToList(), "Id", "Descricao");
             return View(tituloToUpdate);
         }
 

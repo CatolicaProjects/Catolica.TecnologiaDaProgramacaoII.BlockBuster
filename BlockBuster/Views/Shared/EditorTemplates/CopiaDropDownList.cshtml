@@ -2,7 +2,8 @@
 @{
     BlockBuster.Models.Repository db = new BlockBuster.Models.Repository();
     var list = db.Copias.OrderBy(c => c.Titulo.Nome).ToList();
-    var selectList = new SelectList(list, "Id", "Nome", Model);     
+
+    var selectList = new SelectList(list, "Id", "Descricao", Model);     
 }
 
 @Html.DropDownListFor(model => model, selectList, "[Selecione]");

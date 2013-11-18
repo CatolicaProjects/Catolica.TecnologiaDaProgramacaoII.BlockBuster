@@ -60,6 +60,13 @@
             @Html.ListBox("ArrayAtores", (MultiSelectList)ViewBag.MultiSelectAtores)
             @Html.ValidationMessageFor(model => model.ArrayAtores)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Generos)
+        </div>
+        <div class="editor-field">
+            @Html.ListBox("ArrayGeneros", (MultiSelectList)ViewBag.MultiSelectGeneros)
+            @Html.ValidationMessageFor(model => model.ArrayGeneros)
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>

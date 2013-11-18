@@ -6,7 +6,8 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -58,6 +59,14 @@
         <div class="editor-field">
             @Html.ListBox("ArrayAtores", (MultiSelectList)ViewBag.MultiSelectAtores)
             @Html.ValidationMessageFor(model => model.ArrayAtores)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Generos)
+        </div>
+        <div class="editor-field">
+            @Html.ListBox("ArrayGeneros", (MultiSelectList)ViewBag.MultiSelectGeneros)
+            @Html.ValidationMessageFor(model => model.ArrayGeneros)
         </div>
         <p>
             <input type="submit" value="Create" />

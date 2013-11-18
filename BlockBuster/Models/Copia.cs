@@ -16,14 +16,24 @@ namespace BlockBuster.Models
 
         [Required]
         [UIHint("TituloDropDownList")]
+        [Display(Name = "Título")]
         public int TituloId { get; set; }
         public virtual Titulo Titulo { get; set; }
 
         [Required]
         [UIHint("TipoCopiaDropDownList")]
+        [Display(Name = "Cópia")]
         public int TipoCopiaId { get; set; }
         public virtual TipoCopia TipoCopia { get; set; }
 
         public virtual ICollection<Locacao> Locacoes { get; set; }
+
+        public string Descricao
+        {
+            get
+            {
+                return string.Format("{0} [{1}]", this.Titulo.Nome, this.TipoCopia.Descricao);
+            }
+        }
     }  
 }

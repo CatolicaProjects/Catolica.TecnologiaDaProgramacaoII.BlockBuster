@@ -17,10 +17,12 @@ namespace BlockBuster.Models
         [Required]
         [UIHint("ClienteDropDownList")]
         public int ClienteId { get; set; }
+        [Display(Name = "Cliente")]
         public virtual Cliente Cliente { get; set; }
 
         [Required]
         [UIHint("CopiaDropDownList")]
+        [Display(Name = "Cópia")]
         public int CopiaId { get; set; }
         public virtual Copia Copia { get; set; }
 

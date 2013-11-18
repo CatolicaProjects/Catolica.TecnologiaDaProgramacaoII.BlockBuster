@@ -29,5 +29,25 @@ namespace BlockBuster.Helpers
                 return string.Empty;
             }
         }
+
+        public static string BuildString(List<Genero> generos)
+        {
+            if (generos.Count > 0)
+            {
+                StringBuilder content = new StringBuilder();
+
+                foreach (var genero in generos)
+                {
+                    content.AppendFormat("{0}, ", genero.Descricao);
+                }
+
+                int virgulaEEspaco = content.Length - 2;
+                return content.Remove(virgulaEEspaco, 2).ToString();
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
     }
 }

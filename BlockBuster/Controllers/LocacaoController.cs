@@ -49,6 +49,8 @@ namespace BlockBuster.Controllers
         [HttpPost]
         public ActionResult Create(Locacao locacao)
         {
+            locacao.Copia = db.Copias.Find(locacao.CopiaId);
+            locacao.Cliente = db.Clientes.Find(locacao.ClienteId);
             if (ModelState.IsValid)
             {
                 db.Locacoes.Add(locacao);

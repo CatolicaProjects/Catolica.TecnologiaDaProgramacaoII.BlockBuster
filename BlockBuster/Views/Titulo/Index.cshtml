@@ -28,6 +28,8 @@
         </th>
         <th>Atores
         </th>
+        <th>Gêneros
+        </th>
         <th></th>
     </tr>
 
@@ -51,6 +53,10 @@
             </td>
             <td>
                 @{ string content = BlockBuster.Helpers.HtmlCustomHelper.BuildString(item.Atores.ToList()); }
+                @Html.DisplayFor(modelItem => content)
+            </td>
+            <td>
+                @{ content = BlockBuster.Helpers.HtmlCustomHelper.BuildString(item.Generos.ToList()); }
                 @Html.DisplayFor(modelItem => content)
             </td>
             <td>

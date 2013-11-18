@@ -35,10 +35,10 @@ namespace BlockBuster.Models
         public virtual TipoTitulo TipoTitulo { get; set; }
 
         public virtual ICollection<Genero> Generos { get; set; }
-
-        public IEnumerable<string> ArrayAtores = new List<string>();
-        
+        public IEnumerable<string> ArrayGeneros = new List<string>();
+              
         public virtual ICollection<Ator> Atores { get; set; }
+        public IEnumerable<string> ArrayAtores = new List<string>();
 
         public virtual ICollection<Copia> Copias { get; set; }
     }

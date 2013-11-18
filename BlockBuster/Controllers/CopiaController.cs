@@ -49,6 +49,8 @@ namespace BlockBuster.Controllers
         [HttpPost]
         public ActionResult Create(Copia copia)
         {
+            copia.TipoCopia = db.TipoCopias.Find(copia.TipoCopiaId);
+            copia.Titulo = db.Titulos.Find(copia.TituloId);
             if (ModelState.IsValid)
             {
                 db.Copias.Add(copia);
@@ -78,6 +80,8 @@ namespace BlockBuster.Controllers
         [HttpPost]
         public ActionResult Edit(Copia copia)
         {
+            copia.TipoCopia = db.TipoCopias.Find(copia.TipoCopiaId);
+            copia.Titulo = db.Titulos.Find(copia.TituloId);
             if (ModelState.IsValid)
             {
                 db.Entry(copia).State = EntityState.Modified;
