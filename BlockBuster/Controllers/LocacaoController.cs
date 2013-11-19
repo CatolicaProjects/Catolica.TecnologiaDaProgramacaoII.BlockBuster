@@ -51,6 +51,16 @@ namespace BlockBuster.Controllers
         {
             locacao.Copia = db.Copias.Find(locacao.CopiaId);
             locacao.Cliente = db.Clientes.Find(locacao.ClienteId);
+            if (!locacao.PossuiCreditos())
+            {
+                ViewBag.Erro = "Cliente não possui créditos suficientes para locação";
+                return View(locacao);
+            }
+            else
+            {
+                ViewBag.Erro = string.Empty;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Locacoes.Add(locacao);
