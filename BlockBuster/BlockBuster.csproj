@@ -222,6 +222,10 @@
     <Compile Include="Migrations\201311152107399_AddColumnTipoCopiaInCopia.Designer.cs">
       <DependentUpon>201311152107399_AddColumnTipoCopiaInCopia.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201311192133184_AlterTypeDatetimeAllowNullInDataDevolucao.cs" />
+    <Compile Include="Migrations\201311192133184_AlterTypeDatetimeAllowNullInDataDevolucao.Designer.cs">
+      <DependentUpon>201311192133184_AlterTypeDatetimeAllowNullInDataDevolucao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Ator.cs" />
@@ -387,6 +391,7 @@
     <Content Include="Views\Shared\EditorTemplates\TipoTituloDropDownList.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TipoCopiaDropDownList.cshtml" />
     <Content Include="Views\Cliente\AddCredits.cshtml" />
+    <Content Include="Views\Locacao\SetDevolucao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -430,6 +435,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201311152107399_AddColumnTipoCopiaInCopia.resx">
       <DependentUpon>201311152107399_AddColumnTipoCopiaInCopia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201311192133184_AlterTypeDatetimeAllowNullInDataDevolucao.resx">
+      <DependentUpon>201311192133184_AlterTypeDatetimeAllowNullInDataDevolucao.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

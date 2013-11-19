@@ -98,6 +98,30 @@ namespace BlockBuster.Controllers
             return View(locacao);
         }
 
+        public ActionResult SetDevolucao(long id = 0)
+        {
+            Locacao locacao = db.Locacoes.Find(id);
+            if (locacao == null)
+            {
+                return HttpNotFound();
+            }
+            return View(locacao);
+        }
+
+        [HttpPost]
+        public ActionResult SetDevolucao(Int64 id, DateTime dataDevolucao)
+        {
+            Locacao locacao = db.Locacoes.Find(id);
+            locacao.DataDevolucao = dataDevolucao;
+            if (ModelState.IsValid)
+            {
+                db.Entry(locacao).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(locacao);
+        }
+
         //
         // GET: /Locacao/Delete/5
 

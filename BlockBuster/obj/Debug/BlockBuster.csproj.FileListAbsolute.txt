@@ -122,3 +122,4 @@ C:\Users\gabriel.lima\Documents\Visual Studio 2012\Projects\Catolica.TecnologiaD
 C:\Users\gabriel.lima\Documents\Visual Studio 2012\Projects\Catolica.TecnologiaDaProgramacaoII.BlockBuster\BlockBuster\obj\Debug\BlockBuster.csproj.GenerateResource.Cache
 C:\Users\gabriel.lima\Documents\Visual Studio 2012\Projects\Catolica.TecnologiaDaProgramacaoII.BlockBuster\BlockBuster\obj\Debug\BlockBuster.dll
 C:\Users\gabriel.lima\Documents\Visual Studio 2012\Projects\Catolica.TecnologiaDaProgramacaoII.BlockBuster\BlockBuster\obj\Debug\BlockBuster.pdb
+C:\Users\gabriel.lima\Documents\Visual Studio 2012\Projects\Catolica.TecnologiaDaProgramacaoII.BlockBuster\BlockBuster\obj\Debug\BlockBuster.Migrations.AlterTypeDatetimeAllowNullInDataDevolucao.resources
