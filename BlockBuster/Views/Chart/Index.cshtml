@@ -2,20 +2,28 @@
     ViewBag.Title = "Gráficos";
 }
 
-<select class="target">
-    <option value="[Selecione]" selected="selected">[Selecione]</option>
-    <option value="AtoresEOTotalDeTitulosPorAtor">Atores e o total de titulos por ator</option>
-    <option value="GenerosEOTotalDeTitulosPorGenero">Gêneros e o total de titulos por gênero</option>
-    <option value="ClientesEOTotalDeTitulosLocados">Clientes e o total de titulos locados</option>
-    <option value="Top10DosTitulosMaisLocadosPorPeriodo">Top 10 dos titulos mais locados por período</option>
-</select>
+<!-- Single button -->
+<div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+        Selecione <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Atores e o total de titulos por ator</a></li>
+        <li><a href="#">Gêneros e o total de titulos por gênero</a></li>
+        <li><a href="#">Clientes e o total de titulos locados</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Top 10 dos titulos mais locados por período</a></li>
+    </ul>
+</div>
 
 <div id="divFilter" hidden="hidden">
-    <label for="from">De</label>
-    <input type="text" id="from" name="from" />
-    <label for="to">Até</label>
-    <input type="text" id="to" name="to" />
-    <input type="button" id="filter" name="filter" value="Filtrar" />
+    <div class="row">
+        <div class="col-xs-2">
+            <input type="text" id="from" class="form-control" placeholder="20/11/2013">
+            <input type="text" id="to" class="form-control" placeholder="20/11/2013">
+            <button type="button" id="filter" class="btn btn-primary">Filtrar</button>
+        </div>
+    </div>
 </div>
 
 <div id="chart_div" style="width: 900px; height: 500px;"></div>
@@ -25,6 +33,7 @@
     <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
     <script type="text/javascript">
+
         $(function () {
 
             $("#divFilter").slideUp();
@@ -46,15 +55,16 @@
             $("#from").val(hoje.ddmmyyyy());
             $("#to").val(hoje.ddmmyyyy());
 
-            $(".target").change(function () {
+            $(document).on('click', '.dropdown-menu li a', function () {
+                console.log("Selected Option:" + $(this).text());
 
                 $("#divFilter").slideUp();
                 $("#chart_div").slideUp();
 
-                val = $(this).val();
+                val = $(this).text();
 
                 switch (val) {
-                    case "AtoresEOTotalDeTitulosPorAtor":
+                    case "Atores e o total de titulos por ator":
                         $.ajax({
                             url: 'https://www.google.com/jsapi?callback',
                             cache: true,
@@ -77,8 +87,7 @@
                                                     'title': 'Atores e o total de titulos por ator',
                                                     'width': 600,
                                                     'height': 400,
-                                                    is3D: true,
-                                                    backgroundColor: '#efeeef'
+                                                    is3D: true
                                                 };
 
                                                 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -92,7 +101,7 @@
                         });
                         break;
 
-                    case "GenerosEOTotalDeTitulosPorGenero":
+                    case "Gêneros e o total de titulos por gênero":
                         $.ajax({
                             url: 'https://www.google.com/jsapi?callback',
                             cache: true,
@@ -115,8 +124,7 @@
                                                     'title': 'Gêneros e o total de titulos por gênero',
                                                     'width': 600,
                                                     'height': 400,
-                                                    is3D: true,
-                                                    backgroundColor: '#efeeef'
+                                                    is3D: true
                                                 };
 
                                                 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -130,7 +138,7 @@
                         });
                         break;
 
-                    case "ClientesEOTotalDeTitulosLocados":
+                    case "Clientes e o total de titulos locados":
                         $.ajax({
                             url: 'https://www.google.com/jsapi?callback',
                             cache: true,
@@ -153,8 +161,7 @@
                                                     'title': 'Clientes e o total de titulos locados',
                                                     'width': 600,
                                                     'height': 400,
-                                                    is3D: true,
-                                                    backgroundColor: '#efeeef'
+                                                    is3D: true
                                                 };
 
                                                 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -168,30 +175,9 @@
                         });
                         break;
 
-                    case "Top10DosTitulosMaisLocadosPorPeriodo":
+                    case "Top 10 dos titulos mais locados por período":
 
                         $("#divFilter").slideDown();
-
-                        /*
-                        $(function () {
-                            $("#from").datepicker({
-                                defaultDate: "+1w",
-                                changeMonth: true,
-                                numberOfMonths: 3,
-                                onClose: function (selectedDate) {
-                                    $("#to").datepicker("option", "minDate", selectedDate);
-                                }
-                            });
-                            $("#to").datepicker({
-                                defaultDate: "+1w",
-                                changeMonth: true,
-                                numberOfMonths: 3,
-                                onClose: function (selectedDate) {
-                                    $("#from").datepicker("option", "maxDate", selectedDate);
-                                }
-                            });
-                        });
-                        */
 
                         $("#filter").click(function () {
 
@@ -227,8 +213,7 @@
                                                         'title': 'Top 10 dos titulos mais locados por período',
                                                         'width': 600,
                                                         'height': 400,
-                                                        is3D: true,
-                                                        backgroundColor: '#efeeef'
+                                                        is3D: true
                                                     };
 
                                                     var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
