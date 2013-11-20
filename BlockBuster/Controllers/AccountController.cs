@@ -33,8 +33,9 @@ namespace BlockBuster.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(string userName, string password, string returnUrl)
         {
+            LoginModel model = new LoginModel { UserName = userName, Password = password, RememberMe = true };
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
@@ -48,8 +49,8 @@ namespace BlockBuster.Controllers
         //
         // POST: /Account/LogOff
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpGet]
+        //[ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             WebSecurity.Logout();
@@ -72,8 +73,15 @@ namespace BlockBuster.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(string userName, string password, string confirmPassword)
         {
+            RegisterModel model = new RegisterModel
+            {
+                UserName = userName,
+                Password = password,
+                ConfirmPassword = confirmPassword,
+            };
+
             if (ModelState.IsValid)
             {
                 // Attempt to register the user

@@ -9,7 +9,7 @@ using BlockBuster.Models;
 
 namespace BlockBuster.Controllers
 {
-    //TODO: descomentar [Authorize]
+    [Authorize]
     public class TituloController : Controller
     {
         private Repository db = new Repository();
