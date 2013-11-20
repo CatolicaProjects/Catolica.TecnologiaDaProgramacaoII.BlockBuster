@@ -38,6 +38,10 @@ namespace BlockBuster
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquerymask").Include(
+                        "~/Scripts/jquery.mask.js",
+                        "~/Scripts/jquery.mask.min.js"));
         }
     }
 }

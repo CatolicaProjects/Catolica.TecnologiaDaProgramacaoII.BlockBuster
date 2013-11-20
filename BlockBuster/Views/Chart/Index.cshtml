@@ -1,155 +1,253 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Gráficos";
 }
-<input type="button" id="filter" name="filter" value="Filter" />
+
+<select class="target">
+    <option value="[Selecione]" selected="selected">[Selecione]</option>
+    <option value="AtoresEOTotalDeTitulosPorAtor">Atores e o total de titulos por ator</option>
+    <option value="GenerosEOTotalDeTitulosPorGenero">Gêneros e o total de titulos por gênero</option>
+    <option value="ClientesEOTotalDeTitulosLocados">Clientes e o total de titulos locados</option>
+    <option value="Top10DosTitulosMaisLocadosPorPeriodo">Top 10 dos titulos mais locados por período</option>
+</select>
+
+<div id="divFilter" hidden="hidden">
+    <label for="from">De</label>
+    <input type="text" id="from" name="from" />
+    <label for="to">Até</label>
+    <input type="text" id="to" name="to" />
+    <input type="button" id="filter" name="filter" value="Filtrar" />
+</div>
+
 <div id="chart_div" style="width: 900px; height: 500px;"></div>
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jquerymask")
+    <!--<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>-->
+    <script type="text/javascript">
+        $(function () {
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
+            $("#divFilter").slideUp();
 
-    $(function () {
+            Date.prototype.ddmmyyyy = function () {
 
-        $('#filter').on('click', function () {
-            $.ajax({
-                url: 'https://www.google.com/jsapi?callback',
-                cache: true,
-                dataType: 'script',
-                success: function () {
-                    google.load('visualization', '1', {
-                        packages: ['corechart'], 'callback': function () {
-                            $.ajax({
-                                type: "POST",
-                                dataType: "json",
-                                data: "",
-                                url: "/Chart/AtoresEOTotalDeTitulosPorAtor",
-                                success: function (jsondata) {
-                                    //var data = google.visualization.arrayToDataTable(jsondata);
+                var yyyy = this.getFullYear().toString();
+                var mm = (this.getMonth() + 1).toString(); // getMonth() is zero-based         
+                var dd = this.getDate().toString();
 
-                                    //var options = { title: 'My Daily Activities' };
+                return (dd[1] ? dd : "0" + dd[0]) + '/' + (mm[1] ? mm : "0" + mm[0]) + '/' + yyyy;
+            };
 
-                                    //var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-                                    //chart.draw(data, options);
+            var hoje = new Date();
 
-                                    //var data = new google.visualization.DataTable();
-                                    var data = new google.visualization.DataTable();
-                                    //arrayToDataTable(jsondata);
-                                    data.addColumn('string', 'Atores');
-                                    data.addColumn('number', 'Títulos');
-                                    data.addRows(jsondata);
-                                    //  ['Mushrooms', 3],
-                                    //  ['Onions', 1],
-                                    //  ['Olives', 1],
-                                    //  ['Zucchini', 1],
-                                    //  ['Pepperoni', 2]
-                                    //]);
+            $("#from").mask("99/99/9999");
+            $("#to").mask("99/99/9999");
 
-                                    // Set chart options
-                                    var options = {
-                                        'title': 'How Much Pizza I Ate Last Night',
-                                        'width': 400,
-                                        'height': 300
-                                    };
+            $("#from").val(hoje.ddmmyyyy());
+            $("#to").val(hoje.ddmmyyyy());
 
-                                    // Instantiate and draw our chart, passing in some options.
-                                    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-                                    chart.draw(data, options);
+            $(".target").change(function () {
+
+                $("#divFilter").slideUp();
+                $("#chart_div").slideUp();
+
+                val = $(this).val();
+
+                switch (val) {
+                    case "AtoresEOTotalDeTitulosPorAtor":
+                        $.ajax({
+                            url: 'https://www.google.com/jsapi?callback',
+                            cache: true,
+                            dataType: 'script',
+                            success: function () {
+                                google.load('visualization', '1', {
+                                    packages: ['corechart'], 'callback': function () {
+                                        $.ajax({
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: "",
+                                            url: "/Chart/AtoresEOTotalDeTitulosPorAtor",
+                                            success: function (jsondata) {
+                                                var data = new google.visualization.DataTable();
+                                                data.addColumn('string', 'Atores');
+                                                data.addColumn('number', 'Títulos');
+                                                data.addRows(jsondata);
+
+                                                var options = {
+                                                    'title': 'Atores e o total de titulos por ator',
+                                                    'width': 600,
+                                                    'height': 400,
+                                                    is3D: true,
+                                                    backgroundColor: '#efeeef'
+                                                };
+
+                                                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                                                chart.draw(data, options);
+                                                $("#chart_div").slideDown();
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                        break;
+
+                    case "GenerosEOTotalDeTitulosPorGenero":
+                        $.ajax({
+                            url: 'https://www.google.com/jsapi?callback',
+                            cache: true,
+                            dataType: 'script',
+                            success: function () {
+                                google.load('visualization', '1', {
+                                    packages: ['corechart'], 'callback': function () {
+                                        $.ajax({
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: "",
+                                            url: "/Chart/GenerosEOTotalDeTitulosPorGenero",
+                                            success: function (jsondata) {
+                                                var data = new google.visualization.DataTable();
+                                                data.addColumn('string', 'Gêneros');
+                                                data.addColumn('number', 'Títulos');
+                                                data.addRows(jsondata);
+
+                                                var options = {
+                                                    'title': 'Gêneros e o total de titulos por gênero',
+                                                    'width': 600,
+                                                    'height': 400,
+                                                    is3D: true,
+                                                    backgroundColor: '#efeeef'
+                                                };
+
+                                                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                                                chart.draw(data, options);
+                                                $("#chart_div").slideDown();
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                        break;
+
+                    case "ClientesEOTotalDeTitulosLocados":
+                        $.ajax({
+                            url: 'https://www.google.com/jsapi?callback',
+                            cache: true,
+                            dataType: 'script',
+                            success: function () {
+                                google.load('visualization', '1', {
+                                    packages: ['corechart'], 'callback': function () {
+                                        $.ajax({
+                                            type: "POST",
+                                            dataType: "json",
+                                            data: "",
+                                            url: "/Chart/ClientesEOTotalDeTitulosLocados",
+                                            success: function (jsondata) {
+                                                var data = new google.visualization.DataTable();
+                                                data.addColumn('string', 'Clientes');
+                                                data.addColumn('number', 'Títulos');
+                                                data.addRows(jsondata);
+
+                                                var options = {
+                                                    'title': 'Clientes e o total de titulos locados',
+                                                    'width': 600,
+                                                    'height': 400,
+                                                    is3D: true,
+                                                    backgroundColor: '#efeeef'
+                                                };
+
+                                                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                                                chart.draw(data, options);
+                                                $("#chart_div").slideDown();
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                        break;
+
+                    case "Top10DosTitulosMaisLocadosPorPeriodo":
+
+                        $("#divFilter").slideDown();
+
+                        /*
+                        $(function () {
+                            $("#from").datepicker({
+                                defaultDate: "+1w",
+                                changeMonth: true,
+                                numberOfMonths: 3,
+                                onClose: function (selectedDate) {
+                                    $("#to").datepicker("option", "minDate", selectedDate);
                                 }
                             });
-                        }
-                    });
+                            $("#to").datepicker({
+                                defaultDate: "+1w",
+                                changeMonth: true,
+                                numberOfMonths: 3,
+                                onClose: function (selectedDate) {
+                                    $("#from").datepicker("option", "maxDate", selectedDate);
+                                }
+                            });
+                        });
+                        */
+
+                        $("#filter").click(function () {
+
+                            $.ajax({
+                                url: 'https://www.google.com/jsapi?callback',
+                                cache: true,
+                                dataType: 'script',
+                                success: function () {
+                                    google.load('visualization', '1', {
+                                        packages: ['corechart'], 'callback': function () {
+
+                                            var filtro = {};
+                                            filtro.DataInicial = $("#from").val();
+                                            filtro.DataFinal = $("#to").val();
+
+                                            var dataObject = JSON.stringify({
+                                                'DataInicial': $("#from").val(),
+                                                'DataFinal': $("#to").val()
+                                            });
+
+                                            $.ajax({
+                                                type: "POST",
+                                                dataType: "json",
+                                                data: filtro,
+                                                url: "/Chart/Top10DosTitulosMaisLocadosPorPeriodo",
+                                                success: function (jsondata) {
+                                                    var data = new google.visualization.DataTable();
+                                                    data.addColumn('string', 'Atores');
+                                                    data.addColumn('number', 'Títulos');
+                                                    data.addRows(jsondata);
+
+                                                    var options = {
+                                                        'title': 'Top 10 dos titulos mais locados por período',
+                                                        'width': 600,
+                                                        'height': 400,
+                                                        is3D: true,
+                                                        backgroundColor: '#efeeef'
+                                                    };
+
+                                                    var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                                                    chart.draw(data, options);
+                                                    $("#chart_div").slideDown();
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        });
+
+                        break;
                 }
             });
         });
-    });
-
-</script>
-
-@*google.load("visualization", "1", { packages: ["corechart"] });
-                    function drawVisualization() {
-
-                        var data = google.visualization.arrayToDataTable([
-                          ['Task', 'Hours per Day'],
-                          ['Work', 11],
-                          ['Eat', 2],
-                          ['Commute', 2],
-                          ['Watch TV', 2],
-                          ['Sleep', 7]
-                        ]);
-
-                        var options = {
-                            title: 'My Daily Activities',
-                            pieHole: 0.4,
-                        };
-
-                        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-                        chart.draw(data, options);
-                    }*@
-
-@*$.ajax({
-                url: "/Chart/AtoresEOTotalDeTitulosPorAtor",
-                success: function (result) {
-                    // Load the Visualization API and the piechart package.
-                    google.load('visualization', '1.0', { 'packages': ['corechart'] });
-
-                    // Set a callback to run when the Google Visualization API is loaded.
-                    google.setOnLoadCallback(drawChart);
-
-                    // Callback that creates and populates a data table,
-                    // instantiates the pie chart, passes in the data and
-                    // draws it.
-                    function drawChart() {
-
-                        // Create the data table.
-                        var data = new google.visualization.DataTable();
-                        data.addColumn('string', 'Topping');
-                        data.addColumn('number', 'Slices');
-                        data.addRows([
-                          ['Mushrooms', 3],
-                          ['Onions', 1],
-                          ['Olives', 1],
-                          ['Zucchini', 1],
-                          ['Pepperoni', 2]
-                        ]);
-
-                        // Set chart options
-                        var options = {
-                            'title': 'How Much Pizza I Ate Last Night',
-                            'width': 400,
-                            'height': 300
-                        };
-
-                        // Instantiate and draw our chart, passing in some options.
-                        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-                        chart.draw(data, options);
-                    }
-                }
-            });*@
+    </script>
+}
 
 
-@*$(function () {
-        $("#filter").click(function () {
 
-            // Load the Visualization API and the piechart package.
-            google.load('visualization', '1', { 'packages': ['corechart'] });
-
-            // Set a callback to run when the Google Visualization API is loaded.
-            google.setOnLoadCallback(drawChart);
-
-            function drawChart() {
-                var jsonData = $.ajax({
-                    url: "/Chart/AtoresEOTotalDeTitulosPorAtor",
-                    dataType: "json",
-                    async: false
-                }).responseText;
-
-                // Create our data table out of JSON data loaded from server.
-                var data = new google.visualization.DataTable(jsonData);
-
-                // Instantiate and draw our chart, passing in some options.
-                var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-                chart.draw(data, { width: 400, height: 240 });
-            }          
-        });
-    });*@
