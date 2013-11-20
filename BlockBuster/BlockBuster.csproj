@@ -163,6 +163,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AtorController.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\CopiaController.cs" />
     <Compile Include="Controllers\GeneroController.cs" />
@@ -392,6 +393,7 @@
     <Content Include="Views\Shared\EditorTemplates\TipoCopiaDropDownList.cshtml" />
     <Content Include="Views\Cliente\AddCredits.cshtml" />
     <Content Include="Views\Locacao\SetDevolucao.cshtml" />
+    <Content Include="Views\Chart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
