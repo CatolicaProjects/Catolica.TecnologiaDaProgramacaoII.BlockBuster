@@ -14,16 +14,10 @@ namespace BlockBuster.Controllers
     {
         private Repository db = new Repository();
 
-        //
-        // GET: /TipoTitulo/
-
         public ActionResult Index()
         {
             return View(db.TipoTitulos.ToList());
         }
-
-        //
-        // GET: /TipoTitulo/Details/5
 
         public ActionResult Details(long id = 0)
         {
@@ -35,17 +29,13 @@ namespace BlockBuster.Controllers
             return View(tipotitulo);
         }
 
-        //
-        // GET: /TipoTitulo/Create
-
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /TipoTitulo/Create
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Create(TipoTitulo tipotitulo)
         {
@@ -59,9 +49,7 @@ namespace BlockBuster.Controllers
             return View(tipotitulo);
         }
 
-        //
-        // GET: /TipoTitulo/Edit/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long id = 0)
         {
             TipoTitulo tipotitulo = db.TipoTitulos.Find(id);
@@ -72,9 +60,7 @@ namespace BlockBuster.Controllers
             return View(tipotitulo);
         }
 
-        //
-        // POST: /TipoTitulo/Edit/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(TipoTitulo tipotitulo)
         {
@@ -87,9 +73,7 @@ namespace BlockBuster.Controllers
             return View(tipotitulo);
         }
 
-        //
-        // GET: /TipoTitulo/Delete/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long id = 0)
         {
             TipoTitulo tipotitulo = db.TipoTitulos.Find(id);
@@ -100,9 +84,7 @@ namespace BlockBuster.Controllers
             return View(tipotitulo);
         }
 
-        //
-        // POST: /TipoTitulo/Delete/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {

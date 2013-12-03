@@ -14,16 +14,10 @@ namespace BlockBuster.Controllers
     {
         private Repository db = new Repository();
 
-        //
-        // GET: /Copia/
-
         public ActionResult Index()
         {
             return View(db.Copias.ToList());
         }
-
-        //
-        // GET: /Copia/Details/5
 
         public ActionResult Details(long id = 0)
         {
@@ -35,17 +29,13 @@ namespace BlockBuster.Controllers
             return View(copia);
         }
 
-        //
-        // GET: /Copia/Create
-
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Copia/Create
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Create(Copia copia)
         {
@@ -61,9 +51,7 @@ namespace BlockBuster.Controllers
             return View(copia);
         }
 
-        //
-        // GET: /Copia/Edit/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long id = 0)
         {
             Copia copia = db.Copias.Find(id);
@@ -74,9 +62,7 @@ namespace BlockBuster.Controllers
             return View(copia);
         }
 
-        //
-        // POST: /Copia/Edit/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(Copia copia)
         {
@@ -91,9 +77,7 @@ namespace BlockBuster.Controllers
             return View(copia);
         }
 
-        //
-        // GET: /Copia/Delete/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long id = 0)
         {
             Copia copia = db.Copias.Find(id);
@@ -104,9 +88,7 @@ namespace BlockBuster.Controllers
             return View(copia);
         }
 
-        //
-        // POST: /Copia/Delete/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {

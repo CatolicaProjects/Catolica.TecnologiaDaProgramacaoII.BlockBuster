@@ -14,16 +14,10 @@ namespace BlockBuster.Controllers
     {
         private Repository db = new Repository();
 
-        //
-        // GET: /Cliente/
-
         public ActionResult Index()
         {
             return View(db.Clientes.ToList());
         }
-
-        //
-        // GET: /Cliente/Details/5
 
         public ActionResult Details(long id = 0)
         {
@@ -35,17 +29,13 @@ namespace BlockBuster.Controllers
             return View(cliente);
         }
 
-        //
-        // GET: /Cliente/Create
-
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Cliente/Create
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Create(Cliente cliente)
         {
@@ -59,9 +49,7 @@ namespace BlockBuster.Controllers
             return View(cliente);
         }
 
-        //
-        // GET: /Cliente/Edit/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long id = 0)
         {
             Cliente cliente = db.Clientes.Find(id);
@@ -72,9 +60,7 @@ namespace BlockBuster.Controllers
             return View(cliente);
         }
 
-        //
-        // POST: /Cliente/Edit/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(Cliente cliente)
         {
@@ -87,9 +73,7 @@ namespace BlockBuster.Controllers
             return View(cliente);
         }
 
-        //
-        // GET: /Cliente/Delete/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long id = 0)
         {
             Cliente cliente = db.Clientes.Find(id);
@@ -100,9 +84,7 @@ namespace BlockBuster.Controllers
             return View(cliente);
         }
 
-        //
-        // POST: /Cliente/Delete/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
@@ -112,6 +94,7 @@ namespace BlockBuster.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult AddCredits(long id = 0)
         {
             Cliente cliente = db.Clientes.Find(id);
@@ -122,6 +105,7 @@ namespace BlockBuster.Controllers
             return View(cliente);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult AddCredits(Int64 id, decimal valorAcrescimo)
         {

@@ -14,16 +14,10 @@ namespace BlockBuster.Controllers
     {
         private Repository db = new Repository();
 
-        //
-        // GET: /Genero/
-
         public ActionResult Index()
         {
             return View(db.Generos.ToList());
         }
-
-        //
-        // GET: /Genero/Details/5
 
         public ActionResult Details(long id = 0)
         {
@@ -35,17 +29,14 @@ namespace BlockBuster.Controllers
             return View(genero);
         }
 
-        //
-        // GET: /Genero/Create
 
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Genero/Create
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Create(Genero genero)
         {
@@ -59,9 +50,7 @@ namespace BlockBuster.Controllers
             return View(genero);
         }
 
-        //
-        // GET: /Genero/Edit/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long id = 0)
         {
             Genero genero = db.Generos.Find(id);
@@ -72,9 +61,7 @@ namespace BlockBuster.Controllers
             return View(genero);
         }
 
-        //
-        // POST: /Genero/Edit/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(Genero genero)
         {
@@ -87,9 +74,7 @@ namespace BlockBuster.Controllers
             return View(genero);
         }
 
-        //
-        // GET: /Genero/Delete/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long id = 0)
         {
             Genero genero = db.Generos.Find(id);
@@ -100,9 +85,7 @@ namespace BlockBuster.Controllers
             return View(genero);
         }
 
-        //
-        // POST: /Genero/Delete/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {

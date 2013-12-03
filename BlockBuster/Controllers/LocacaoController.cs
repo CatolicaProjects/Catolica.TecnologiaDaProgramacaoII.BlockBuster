@@ -14,16 +14,10 @@ namespace BlockBuster.Controllers
     {
         private Repository db = new Repository();
 
-        //
-        // GET: /Locacao/
-
         public ActionResult Index()
         {
             return View(db.Locacoes.ToList());
         }
-
-        //
-        // GET: /Locacao/Details/5
 
         public ActionResult Details(long id = 0)
         {
@@ -35,17 +29,13 @@ namespace BlockBuster.Controllers
             return View(locacao);
         }
 
-        //
-        // GET: /Locacao/Create
-
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Locacao/Create
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Create(Locacao locacao)
         {
@@ -70,9 +60,7 @@ namespace BlockBuster.Controllers
             return View(locacao);
         }
 
-        //
-        // GET: /Locacao/Edit/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long id = 0)
         {
             Locacao locacao = db.Locacoes.Find(id);
@@ -83,9 +71,7 @@ namespace BlockBuster.Controllers
             return View(locacao);
         }
 
-        //
-        // POST: /Locacao/Edit/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(Locacao locacao)
         {
@@ -98,6 +84,7 @@ namespace BlockBuster.Controllers
             return View(locacao);
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult SetDevolucao(long id = 0)
         {
             Locacao locacao = db.Locacoes.Find(id);
@@ -108,6 +95,7 @@ namespace BlockBuster.Controllers
             return View(locacao);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult SetDevolucao(Int64 id, DateTime dataDevolucao)
         {
@@ -122,9 +110,7 @@ namespace BlockBuster.Controllers
             return View(locacao);
         }
 
-        //
-        // GET: /Locacao/Delete/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long id = 0)
         {
             Locacao locacao = db.Locacoes.Find(id);
@@ -135,9 +121,7 @@ namespace BlockBuster.Controllers
             return View(locacao);
         }
 
-        //
-        // POST: /Locacao/Delete/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {

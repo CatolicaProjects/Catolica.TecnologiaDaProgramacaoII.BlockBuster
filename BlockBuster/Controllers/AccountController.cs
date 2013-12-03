@@ -10,6 +10,8 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using BlockBuster.Filters;
 using BlockBuster.Models;
+using System.Security.Principal;
+using System.Threading;
 
 namespace BlockBuster.Controllers
 {
@@ -36,10 +38,22 @@ namespace BlockBuster.Controllers
         public ActionResult Login(string userName, string password, string returnUrl)
         {
             LoginModel model = new LoginModel { UserName = userName, Password = password, RememberMe = true };
+
+            var roles = Roles.GetAllRoles();
+            if (roles == null)
+            {
+                Roles.CreateRole("admin");
+            }
+            var rolesFromUser = Roles.GetRolesForUser(userName);
+            if (rolesFromUser == null)
+            {
+                Roles.AddUserToRole(userName, "admin");
+            }
+
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
             {
                 return RedirectToLocal(returnUrl);
-            }
+            } 
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");

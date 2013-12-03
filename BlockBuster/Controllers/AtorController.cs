@@ -14,16 +14,10 @@ namespace BlockBuster.Controllers
     {
         private Repository db = new Repository();
 
-        //
-        // GET: /Ator/
-
         public ActionResult Index()
         {
             return View(db.Atores.ToList());
         }
-
-        //
-        // GET: /Ator/Details/5
 
         public ActionResult Details(long id = 0)
         {
@@ -35,17 +29,13 @@ namespace BlockBuster.Controllers
             return View(ator);
         }
 
-        //
-        // GET: /Ator/Create
-
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Ator/Create
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Create(Ator ator)
         {
@@ -59,9 +49,7 @@ namespace BlockBuster.Controllers
             return View(ator);
         }
 
-        //
-        // GET: /Ator/Edit/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long id = 0)
         {
             Ator ator = db.Atores.Find(id);
@@ -72,9 +60,7 @@ namespace BlockBuster.Controllers
             return View(ator);
         }
 
-        //
-        // POST: /Ator/Edit/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(Ator ator)
         {
@@ -87,9 +73,7 @@ namespace BlockBuster.Controllers
             return View(ator);
         }
 
-        //
-        // GET: /Ator/Delete/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long id = 0)
         {
             Ator ator = db.Atores.Find(id);
@@ -100,9 +84,7 @@ namespace BlockBuster.Controllers
             return View(ator);
         }
 
-        //
-        // POST: /Ator/Delete/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {

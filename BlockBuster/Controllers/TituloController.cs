@@ -14,17 +14,11 @@ namespace BlockBuster.Controllers
     {
         private Repository db = new Repository();
 
-        //
-        // GET: /Titulo/
-
         public ActionResult Index()
         {
             var titulos = db.Titulos.Include(i => i.Atores).Include(i => i.Generos).ToList();
             return View(titulos);
         }
-
-        //
-        // GET: /Titulo/Details/5
 
         public ActionResult Details(long id = 0)
         {
@@ -36,9 +30,7 @@ namespace BlockBuster.Controllers
             return View(titulo);
         }
 
-        //
-        // GET: /Titulo/Create
-
+        [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             ViewBag.MultiSelectAtores = new MultiSelectList(db.Atores.ToList(), "Id", "Nome");
@@ -46,9 +38,7 @@ namespace BlockBuster.Controllers
             return View();
         }
 
-        //
-        // POST: /Titulo/Create
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Create(Titulo titulo, FormCollection formCollection, string[] arrayAtores, string[] arrayGeneros)
         {
@@ -84,9 +74,7 @@ namespace BlockBuster.Controllers
             return View(titulo);
         }
 
-        //
-        // GET: /Titulo/Edit/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(long id = 0)
         {
             Titulo titulo = db.Titulos.Find(id);
@@ -102,9 +90,7 @@ namespace BlockBuster.Controllers
             return View(titulo);
         }
 
-        //
-        // POST: /Titulo/Edit/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public ActionResult Edit(int? id, FormCollection formCollection, string[] arrayAtores, string[] arrayGeneros)
         {
@@ -188,9 +174,7 @@ namespace BlockBuster.Controllers
             return View(tituloToUpdate);
         }
 
-        //
-        // GET: /Titulo/Delete/5
-
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(long id = 0)
         {
             Titulo titulo = db.Titulos.Find(id);
@@ -201,9 +185,7 @@ namespace BlockBuster.Controllers
             return View(titulo);
         }
 
-        //
-        // POST: /Titulo/Delete/5
-
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(long id)
         {
