@@ -26,7 +26,7 @@
     </div>
 </div>
 
-<div id="chart_div" style="width: 900px; height: 500px;"></div>
+<div id="chart_div" style="width: 900px; height: 500px;" align="center"></div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jquerymask")
@@ -58,8 +58,10 @@
             $(document).on('click', '.dropdown-menu li a', function () {
                 console.log("Selected Option:" + $(this).text());
 
+                $("#chart_div").html('<img src="@(Url.Content("~/Images/loading.gif"))" width="50" height="40">');
+
                 $("#divFilter").slideUp();
-                $("#chart_div").slideUp();
+                //$("#chart_div").slideUp();
 
                 val = $(this).text();
 
@@ -78,6 +80,7 @@
                                             data: "",
                                             url: "/Chart/AtoresEOTotalDeTitulosPorAtor",
                                             success: function (jsondata) {
+                                                
                                                 var data = new google.visualization.DataTable();
                                                 data.addColumn('string', 'Atores');
                                                 data.addColumn('number', 'Títulos');
@@ -92,7 +95,7 @@
 
                                                 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
                                                 chart.draw(data, options);
-                                                $("#chart_div").slideDown();
+                                                //$("#chart_div").slideDown();
                                             }
                                         });
                                     }
@@ -129,7 +132,7 @@
 
                                                 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
                                                 chart.draw(data, options);
-                                                $("#chart_div").slideDown();
+                                                //$("#chart_div").slideDown();
                                             }
                                         });
                                     }
@@ -166,7 +169,7 @@
 
                                                 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
                                                 chart.draw(data, options);
-                                                $("#chart_div").slideDown();
+                                                //$("#chart_div").slideDown();
                                             }
                                         });
                                     }
@@ -218,7 +221,7 @@
 
                                                     var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
                                                     chart.draw(data, options);
-                                                    $("#chart_div").slideDown();
+                                                    //$("#chart_div").slideDown();
                                                 }
                                             });
                                         }
